@@ -105,4 +105,21 @@ func main() {
 	} else {
 		fmt.Println("The tree is not complete")
 	}
+
+	// Create a non-complete tree
+	tree = Tree{}
+	tree.root = newNode(1)
+	tree.root.left = newNode(2)
+	tree.root.right = newNode(3)
+	tree.root.left.left = newNode(4)
+	tree.root.left.right = newNode(5)
+	tree.root.right.left = newNode(6)
+	tree.root.right.right = newNode(7)
+	tree.root.left.left.right = newNode(9)
+
+	if tree.isComplete() {
+		fmt.Println("The tree is complete")
+	} else {
+		fmt.Println("The tree is not complete")
+	}
 }
