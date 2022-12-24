@@ -11,6 +11,8 @@
 
 package main
 
+import "fmt"
+
 /**
  * Node struct
  */
@@ -43,23 +45,36 @@ func (tree *Tree) isComplete() bool {
 	}
 	queue := []*Node{tree.root}
 	isLeaf := false
+
+	// Level order traversal
 	for len(queue) > 0 {
+		// Get first node from queue
 		node := queue[0]
+		// Remove first node from queue
 		queue = queue[1:]
+
+		// If leaf node is found, then the tree is not complete
 		if isLeaf && (node.left != nil || node.right != nil) {
 			return false
 		}
+
+		// If left child is not null, add it to queue
 		if node.left != nil {
 			queue = append(queue, node.left)
+			// If right child of current node is not null, then the tree is not complete
 		} else if node.right != nil {
 			return false
 		}
+		// If right child of current node is not null, add it to queue
 		if node.right != nil {
 			queue = append(queue, node.right)
+			// Change isLeaf to true, so that the next node is leaf node
 		} else {
 			isLeaf = true
 		}
 	}
+
+	// Otherwise, the tree is complete
 	return true
 }
 
@@ -85,4 +100,9 @@ func main() {
 	tree.root.right.right.left = newNode(14)
 	tree.root.right.right.right = newNode(15)
 
+	if tree.isComplete() {
+		fmt.Println("The tree is complete")
+	} else {
+		fmt.Println("The tree is not complete")
+	}
 }
