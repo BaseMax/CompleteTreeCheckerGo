@@ -11,12 +11,18 @@
 
 package main
 
+/**
+ * Node struct
+ */
 type Node struct {
 	data  int
 	left  *Node
 	right *Node
 }
 
+/**
+ * Tree struct
+ */
 type Tree struct {
 	root *Node
 }
@@ -28,6 +34,38 @@ func newNode(data int) *Node {
 	return &Node{data: data}
 }
 
+/**
+ * Check a tree is complete or not
+ */
+func (tree *Tree) isComplete() bool {
+	if tree.root == nil {
+		return true
+	}
+	queue := []*Node{tree.root}
+	isLeaf := false
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+		if isLeaf && (node.left != nil || node.right != nil) {
+			return false
+		}
+		if node.left != nil {
+			queue = append(queue, node.left)
+		} else if node.right != nil {
+			return false
+		}
+		if node.right != nil {
+			queue = append(queue, node.right)
+		} else {
+			isLeaf = true
+		}
+	}
+	return true
+}
+
+/**
+ * Main function
+ */
 func main() {
 	// Create a complete tree
 	tree := Tree{}
